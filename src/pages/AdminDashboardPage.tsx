@@ -11,6 +11,7 @@ const AdminDashboardPage = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check authentication status only once when component mounts
     const token = getStoredToken();
     if (!isAdmin(token)) {
       toast({
