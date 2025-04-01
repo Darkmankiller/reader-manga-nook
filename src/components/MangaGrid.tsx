@@ -23,6 +23,13 @@ const MangaGrid = () => {
     };
 
     fetchMangas();
+    
+    // Add an event listener for when a new manga is uploaded
+    window.addEventListener("mangaUploaded", fetchMangas);
+    
+    return () => {
+      window.removeEventListener("mangaUploaded", fetchMangas);
+    };
   }, []);
 
   if (error) {

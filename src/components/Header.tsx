@@ -28,6 +28,9 @@ const Header = () => {
           <Link to="/" className="hover:text-primary transition-colors">
             Home
           </Link>
+          <Link to="/mangas" className="hover:text-primary transition-colors">
+            Mangas
+          </Link>
           {isLoggedIn ? (
             <>
               <Link to="/admin" className="hover:text-primary transition-colors">
@@ -37,11 +40,7 @@ const Header = () => {
                 Logout
               </Button>
             </>
-          ) : (
-            <Link to="/login">
-              <Button variant="outline">Login</Button>
-            </Link>
-          )}
+          ) : null}
         </nav>
       </div>
     </header>

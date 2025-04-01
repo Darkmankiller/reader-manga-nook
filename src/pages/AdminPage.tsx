@@ -81,6 +81,9 @@ const AdminPage = () => {
           description: `"${newManga.title}" has been added`,
         });
         
+        // Dispatch a custom event to notify that a new manga has been uploaded
+        window.dispatchEvent(new CustomEvent("mangaUploaded"));
+        
         // Reset form
         setTitle("");
         setDescription("");
