@@ -10,11 +10,21 @@ const Header = () => {
   useEffect(() => {
     const token = getStoredToken();
     setIsLoggedIn(isAdmin(token));
+    
+    // Listen for login/logout events
+    const checkAuthStatus = () => {
+      const token = getStoredToken();
+      setIsLoggedIn(isAdmin(token));
+    };
+    
+    window.addEventListener("storage", checkAuthStatus);
+    return () => window.removeEventListener("storage", checkAuthStatus);
   }, []);
   
   const handleLogout = () => {
     removeToken();
     setIsLoggedIn(false);
+    window.dispatchEvent(new StorageEvent("storage"));
   };
   
   return (
@@ -33,7 +43,7 @@ const Header = () => {
           </Link>
           {isLoggedIn ? (
             <>
-              <Link to="/admin" className="hover:text-primary transition-colors">
+              <Link to="/admin-dashboard" className="hover:text-primary transition-colors">
                 Admin Panel
               </Link>
               <Button variant="outline" onClick={handleLogout}>

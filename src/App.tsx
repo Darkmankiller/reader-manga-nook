@@ -7,7 +7,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import ReaderPage from "./pages/ReaderPage";
 import LoginPage from "./pages/LoginPage";
-import AdminPage from "./pages/AdminPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 import MangasPage from "./pages/MangasPage";
 import NotFound from "./pages/NotFound";
 import { getStoredToken, isAdmin } from "@/lib/auth";
@@ -18,7 +19,7 @@ const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const token = getStoredToken();
   
   if (!isAdmin(token)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/admin-login" replace />;
   }
   
   return children;
@@ -34,12 +35,17 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/mangas" element={<MangasPage />} />
           <Route path="/reader/:id" element={<ReaderPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<Navigate to="/admin-login" replace />} />
+          <Route path="/admin-login" element={<AdminLoginPage />} />
           <Route 
             path="/admin" 
+            element={<Navigate to="/admin-dashboard" replace />} 
+          />
+          <Route 
+            path="/admin-dashboard" 
             element={
               <RequireAuth>
-                <AdminPage />
+                <AdminDashboardPage />
               </RequireAuth>
             } 
           />
